@@ -162,7 +162,7 @@ module.exports = {
 				res.view('gestionUtilisateur',{utilisateurs: obj.utilisateurs, messageError: messageError, messageSuccess : messageSuccess, title: 'Utilisateur' });
 				return;
 			}
-			return res.view('gestionUtilisateur',{err: obj.err});
+			return res.view('gestionUtilisateur',{utilisateurs: [], err: obj.err});
 		})
 	}
 	

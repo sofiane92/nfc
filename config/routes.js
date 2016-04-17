@@ -49,7 +49,15 @@ module.exports.routes = {
   'post /user/create':'GestionUtilisateurController.create',
   'get /user/update/:id':'GestionUtilisateurController.beforeupdate',
   'post /user/update/:id':'GestionUtilisateurController.update',
-  '/user/delete/:id':'GestionUtilisateurController.delete'
+  '/user/delete/:id':'GestionUtilisateurController.delete',
+
+  //Recupération, Création, Modification, Suppression Utilisateur
+  '/user/:id_utilisateur/pointage':'GestionPointageController.get',
+  'get /user/:id_utilisateur/pointage/create':'GestionPointageController.beforecreate',
+  'post /user/:id_utilisateur/pointage/create':'GestionPointageController.create',
+  'get /user/:id_utilisateur/pointage/update/:id':'GestionPointageController.beforeupdate',
+  'post /user/:id_utilisateur/pointage/update/:id':'GestionPointageController.update',
+  '/user/:id_utilisateur/pointage/delete/:id':'GestionPointageController.delete'
   
 
 

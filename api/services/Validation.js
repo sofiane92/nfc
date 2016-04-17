@@ -54,6 +54,27 @@ creationUtilisateur: function(req,res){
         }
         return res({isOk:isOk, messageError:messageError});
 }
+
+// creationPointage: function(req,res){
+//         var regdate = '/^(([0]?[1-9]|1[0-2])/([0-2]?[0-9]|3[0-1])/[1-2]\d{3}) (20|21|22|23|[0-1]?\d{1}):([0-5]?\d{1})$/';
+//         isOk = true;
+//         messageError='';
+
+//         if(!regdate.match(req.date_entree) && !regdate.match(req.date_sortie)){
+//           console.log('11111111111111111111111');
+//           isOk = false;
+//           messageError += "Erreur de date \n";
+//         }
+//         else{
+//           if(new Date(req.date_entree)  > new Date(req.date_sortie) ){
+//             console.log('22222222222222222222222');
+//             isOk = false;
+//             messageError += "Erreur ordre des dates \n";
+//           }
+//         }
+
+//         return res({isOk:isOk, messageError:messageError});
+// }
   
 };
 
