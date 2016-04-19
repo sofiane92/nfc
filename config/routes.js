@@ -57,7 +57,12 @@ module.exports.routes = {
   'post /user/:id_utilisateur/pointage/create':'GestionPointageController.create',
   'get /user/:id_utilisateur/pointage/update/:id':'GestionPointageController.beforeupdate',
   'post /user/:id_utilisateur/pointage/update/:id':'GestionPointageController.update',
-  '/user/:id_utilisateur/pointage/delete/:id':'GestionPointageController.delete'
+  '/user/:id_utilisateur/pointage/delete/:id':'GestionPointageController.delete',
+
+  //Data entreprise
+  '/data':'GestionDonneesController.get',
+  '/frequentation':'GestionDonneesController.getFrequentation',
+  '/localisation':'GestionDonneesController.getLocalisation',
   
 
 
