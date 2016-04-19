@@ -3,7 +3,7 @@
         <div class="alert alert-danger">
           <%= messageError %>
         </div>
-<% } %> 
+<% } %>
 <% if (typeof messageSuccess !== 'undefined'){ %>
         <div class="alert alert-success">
           <%= messageSuccess %>
@@ -12,15 +12,15 @@
 <br/>
 <% if(typeof pointage == 'undefined'){ %>
     <form method='post' action='/user/<%= id_utilisateur %>/pointage/create'>
-    	<input type="text" name="date_entree" placeHolder="date_entree">
-    	<input type="text" name="date_sortie" placeHolder="date_sortie">
+    	<input type="text" class="datepicker" name="date_entree" placeHolder="date_entree">
+    	<input type="text" class="datepicker" name="date_sortie" placeHolder="date_sortie">
     	<input type="submit" value="Creation">
 
     </form>
   <% }else{ %>
   	<form method='post' action='/user/<%= id_utilisateur %>/pointage/update/<%= pointage.id %>'>
-    	<input type="text" name="nom" placeHolder="<%= pointage.date_entree %>" value="<%= pointage.date_entree %>">
-    	<input type="text" name="prenom" placeHolder="<%= pointage.date_sorti %>" value="<%= pointage.date_sorti %>">
+    	<input type="text" class="datepicker" name="nom" placeHolder="<%= pointage.date_entree %>" value="<%= pointage.date_entree %>">
+    	<input type="text" class="datepicker" name="prenom" placeHolder="<%= pointage.date_sorti %>" value="<%= pointage.date_sorti %>">
     	<input type="submit" value="Creation">
 
     </form>
