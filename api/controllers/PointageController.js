@@ -44,16 +44,12 @@ module.exports = {
 
 	create:function(req,done){
 
-
 		format_date = function(string){
 			var explode = string.split(" ")
 			var date = explode[0].split("-")
 			var time = explode[1].split(":")
 			return new Date(date[2], date[1], date[0], time[1], date[0])
 		}
-
-		console.log( format_date(req.param('date_entree')) );
-		console.log( format_date(req.param('date_sorti')) );
 
 		var pointage= {
 			id_utilisateur : req.param('id_utilisateur'),
@@ -71,10 +67,18 @@ module.exports = {
 		})
 	},
 	update:function(req,done){
+
+		format_date = function(string){
+			var explode = string.split(" ")
+			var date = explode[0].split("-")
+			var time = explode[1].split(":")
+			return new Date(date[2], date[1], date[0], time[1], date[0])
+		}
+
 		var pointage= {
 			id_utilisateur : req.param('id_utilisateur'),
-			date_entree : new Date(req.param('date_entree')),
-			date_sorti : new Date(req.param('date_sorti')),
+			date_entree : format_date(req.param('date_entree')),
+			date_sorti : format_date(req.param('date_sorti')),
 		}
 		Pointage.update({id:req.param('id')},pointage).exec(function(err,update){
 			if (err) {
