@@ -12,15 +12,15 @@
 <br/>
 <% if(typeof pointage == 'undefined'){ %>
     <form method='post' action='/user/<%= id_utilisateur %>/pointage/create'>
-    	<input type="text" class="datepicker" name="date_entree" placeHolder="date_entree">
-    	<input type="text" class="datepicker" name="date_sortie" placeHolder="date_sortie">
+    	<input type="text" class="datetimepicker" name="date_entree" placeHolder="date_entree">
+    	<input type="text" class="datetimepicker" name="date_sorti" placeHolder="date_sorti">
     	<input type="submit" value="Creation">
 
     </form>
   <% }else{ %>
   	<form method='post' action='/user/<%= id_utilisateur %>/pointage/update/<%= pointage.id %>'>
-    	<input type="text" class="datepicker" name="nom" placeHolder="<%= pointage.date_entree %>" value="<%= pointage.date_entree %>">
-    	<input type="text" class="datepicker" name="prenom" placeHolder="<%= pointage.date_sorti %>" value="<%= pointage.date_sorti %>">
+    	<input type="text" class="datetimepicker" name="date_entree" placeHolder="<%= pointage.date_entree %>" value="<%= pointage.date_entree %>">
+    	<input type="text" class="datetimepicker" name="date_sorti" placeHolder="<%= pointage.date_sorti %>" value="<%= pointage.date_sorti %>">
     	<input type="submit" value="Creation">
 
     </form>

@@ -7,7 +7,7 @@
 
 module.exports = {
 	get:function(done){
-		
+
 		Pointage.find()
 				   .populate('id_utilisateur')
 				   .exec(function(err,pointages){
@@ -18,7 +18,7 @@ module.exports = {
 					})
 	},
 	getAllByUser:function(id_utilisateur,done){
-			
+
 		Pointage.find({id_utilisateur:id_utilisateur})
 				   .populate('id_utilisateur')
 				   .exec(function(err,pointages){
@@ -29,7 +29,7 @@ module.exports = {
 					})
 	},
 	getOneById:function(id,done){
-			
+
 		Pointage.findOne({id:id})
 				   .populate('id_utilisateur')
 				   .exec(function(err,pointage){
@@ -43,18 +43,30 @@ module.exports = {
 
 
 	create:function(req,done){
+
+
+		format_date = function(string){
+			var explode = string.split(" ")
+			var date = explode[0].split("-")
+			var time = explode[1].split(":")
+			return new Date(date[2], date[1], date[0], time[1], date[0])
+		}
+
+		console.log( format_date(req.param('date_entree')) );
+		console.log( format_date(req.param('date_sorti')) );
+
 		var pointage= {
 			id_utilisateur : req.param('id_utilisateur'),
-			date_entree : new Date(req.param('date_entree')),
-			date_sorti : new Date(req.param('date_sorti')),
-			createdat : new Date(),
-			updatedat : new Date()
+			date_entree : format_date(req.param('date_entree')),
+			date_sorti : format_date(req.param('date_sorti'))
 		}
 		Pointage.create(pointage, function(err,ok){
 			if(err){
 				done({status:false, error : err});
 			}
-			done({status:true,pointage:ok});
+			else{
+				done({status:true,pointage:ok});
+			}
 
 		})
 	},
@@ -82,6 +94,6 @@ module.exports = {
 				done({status:true});
 			})
 	}
-	
+
 };
 

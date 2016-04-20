@@ -19,7 +19,7 @@ module.exports = {
 		var messageError = req.session.error;
 		delete req.session.error;
 		delete req.session.success;
-						
+
 		res.view('creationPointage',{
 			title:'Création',
 			id_utilisateur: req.param('id_utilisateur'),
@@ -34,12 +34,11 @@ module.exports = {
 		pointageController.create(req,function(obj){
 			if(obj.status){
 				req.session.success ='Votre création a bien été enrengistré';
-				res.redirect('/user');
-				return;
+				return res.redirect('/user');
 			}else{
 				req.session.error = "Erreur pointage";
 				return res.redirect('/user/'+id_utilisateur+'/pointage/create');
-			}	
+			}
 		})
 
 	},
@@ -61,7 +60,7 @@ module.exports = {
 		});
 	},
 
-	//Affiche la page '/user/update/:id' (recup via l'id en paramètre les infos de l'utilisateur + tous les roles et services pour le formulaire) 
+	//Affiche la page '/user/update/:id' (recup via l'id en paramètre les infos de l'utilisateur + tous les roles et services pour le formulaire)
 	beforeupdate:function(req,res){
 		id_utilisateur = req.param('id_utilisateur');
 		pointageController.getOneById(req.param('id'),function(obj){
@@ -74,8 +73,8 @@ module.exports = {
 				});
 				delete req.session.error;
 				return;
-				//else{return res.render('creationUtilisateur', {err : objRole.err});}	
-			}else{ 
+				//else{return res.render('creationUtilisateur', {err : objRole.err});}
+			}else{
 				req.session.error = "Le pointage n'existe pas ou plus";
 				return res.redirect('/user/'+id_utilisateur+'/pointage');
 			}
@@ -110,6 +109,6 @@ module.exports = {
 			//return res.view('gestionPointage',{pointages: [], err: obj.err});
 		})
 	}
-	
+
 };
 
