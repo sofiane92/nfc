@@ -40,6 +40,62 @@ module.exports = {
 					})
 	},
 
+	userCreate:function(req,done){
+
+		format_date = function(string){
+			var explode = string.split(" ")
+			var date = explode[0].split("-")
+			var time = explode[1].split(":")
+			return new Date(date[2], date[1], date[0], time[1], date[0])
+		}
+
+		var pointage= {
+			id_utilisateur : req.session.user.id,
+			date_entree : format_date(req.param('date_entree')),
+			date_sorti : format_date(req.param('date_sorti'))
+		}
+
+		Pointage.query("SELECT * FROM pointage ORDER BY date_entree DESC LIMIT 1", function(err, pointages){
+			console.log(pointages);
+
+			if(err || pointages.length == 0){
+				done({status:false, error : err});
+			}
+
+			if( pointages[0].date_sorti != null ){
+				var pointage = pointages[0];
+				pointage.date_sorti = new Date();
+
+				Pointage.update(req.session.user.id, pointage, function(err,ok){
+					if(err){
+						done({status:false, error : err});
+					}
+					else{
+						done({status:true,pointage:ok});
+					}
+				})
+			}
+			else{
+				var pointage = {
+					id_utilisateur : req.session.user.id,
+					date_entree : new Date(),
+					date_sorti : null
+				}
+
+				Pointage.create(pointage, function(err,ok){
+					if(err){
+						done({status:false, error : err});
+					}
+					else{
+						done({status:true,pointage:ok});
+					}
+				})
+			}
+
+		});
+
+
+	},
 
 
 	create:function(req,done){

@@ -108,7 +108,38 @@ module.exports = {
 			}
 			//return res.view('gestionPointage',{pointages: [], err: obj.err});
 		})
-	}
+	},
+
+	// Affiche la page '/user' (recup tout les utilisateurs de la bd)
+	userGet:function(req,res){
+		id_utilisateur = req.session.user.id;
+		pointageController.getAllByUser(id_utilisateur, function(obj){
+			if(obj.status){
+				var messageSuccess = req.session.success;
+				var messageError = req.session.error;
+				delete req.session.error;
+				delete req.session.success;
+				res.view('creationUserPointage',{pointages: obj.pointages, messageError: messageError, messageSuccess : messageSuccess, title: 'Pointage' });
+				return;
+			}
+			//return res.view('gestionPointage',{pointages: [], err: obj.err});
+		})
+	},
+
+	// Creer un utilisateur ensuite un login password enfin un compte
+	userCreate:function(req,res){
+		id_utilisateur = req.session.user.id;
+		pointageController.userCreate(req,function(obj){
+			if(obj.status){
+				req.session.success ='Votre pointage a bien été enrengistré';
+				return res.redirect('/pointage');
+			}else{
+				req.session.error = "Erreur pointage";
+				return res.redirect('/pointage');
+			}
+		})
+
+	},
 
 };
 
