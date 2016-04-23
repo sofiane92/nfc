@@ -1,15 +1,33 @@
 -- --------------------------------------------------------
 -- Hôte :                        127.0.0.1
--- Version du serveur:           5.6.22 - MySQL Community Server (GPL)
+-- Version du serveur:           5.6.10 - MySQL Community Server (GPL)
 -- SE du serveur:                Win64
--- HeidiSQL Version:             9.2.0.4947
+-- HeidiSQL Version:             9.3.0.4984
 -- --------------------------------------------------------
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET NAMES utf8mb4 */;
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+
+-- Export de la structure de la base pour nfc
+CREATE DATABASE IF NOT EXISTS `nfc` /*!40100 DEFAULT CHARACTER SET latin1 */;
+USE `nfc`;
+
+
+-- Export de la structure de table nfc. article
+CREATE TABLE IF NOT EXISTS `article` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `tye_article` varchar(32) NOT NULL,
+  `nom_article` varchar(32) NOT NULL,
+  `prix_article` double NOT NULL,
+  `createdat` datetime NOT NULL,
+  `updatedat` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+
 -- Export de données de la table nfc.article : ~5 rows (environ)
+DELETE FROM `article`;
 /*!40000 ALTER TABLE `article` DISABLE KEYS */;
 INSERT INTO `article` (`id`, `tye_article`, `nom_article`, `prix_article`, `createdat`, `updatedat`) VALUES
 	(1, 'plat', 'couscous', 2, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
@@ -19,14 +37,43 @@ INSERT INTO `article` (`id`, `tye_article`, `nom_article`, `prix_article`, `crea
 	(5, 'plat', 'entrecote', 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
 /*!40000 ALTER TABLE `article` ENABLE KEYS */;
 
+
+-- Export de la structure de table nfc. commande
+CREATE TABLE IF NOT EXISTS `commande` (
+  `id_commande` int(11) NOT NULL AUTO_INCREMENT,
+  `id_compte` int(11) NOT NULL,
+  `date_commande` date NOT NULL,
+  `montant` double NOT NULL,
+  `createdat` datetime NOT NULL,
+  `updatedat` datetime NOT NULL,
+  PRIMARY KEY (`id_commande`),
+  KEY `id_compte` (`id_compte`),
+  CONSTRAINT `commande_ibfk_1` FOREIGN KEY (`id_compte`) REFERENCES `compte` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+
 -- Export de données de la table nfc.commande : ~2 rows (environ)
+DELETE FROM `commande`;
 /*!40000 ALTER TABLE `commande` DISABLE KEYS */;
 INSERT INTO `commande` (`id_commande`, `id_compte`, `date_commande`, `montant`, `createdat`, `updatedat`) VALUES
 	(1, 1, '0000-00-00', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
 	(2, 2, '0000-00-00', 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
 /*!40000 ALTER TABLE `commande` ENABLE KEYS */;
 
+
+-- Export de la structure de table nfc. compte
+CREATE TABLE IF NOT EXISTS `compte` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id_utilisateur` int(11) NOT NULL,
+  `argent` double NOT NULL,
+  `active` tinyint(1) NOT NULL,
+  `createdat` datetime NOT NULL,
+  `updatedat` datetime NOT NULL,
+  PRIMARY KEY (`id`,`id_utilisateur`),
+  KEY `id_utilisateur` (`id_utilisateur`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+
 -- Export de données de la table nfc.compte : ~6 rows (environ)
+DELETE FROM `compte`;
 /*!40000 ALTER TABLE `compte` DISABLE KEYS */;
 INSERT INTO `compte` (`id`, `id_utilisateur`, `argent`, `active`, `createdat`, `updatedat`) VALUES
 	(1, 2, 11, 1, '2016-03-01 00:00:00', '2016-03-01 00:00:00'),
@@ -37,7 +84,22 @@ INSERT INTO `compte` (`id`, `id_utilisateur`, `argent`, `active`, `createdat`, `
 	(6, 33, 0, 0, '2016-03-28 18:30:30', '2016-03-29 09:20:52');
 /*!40000 ALTER TABLE `compte` ENABLE KEYS */;
 
+
+-- Export de la structure de table nfc. connexion
+CREATE TABLE IF NOT EXISTS `connexion` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `login` varchar(32) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `salt` varchar(255) NOT NULL,
+  `createdat` datetime NOT NULL,
+  `updatedat` datetime NOT NULL,
+  `id_utilisateur` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `connexion_fk1` (`id_utilisateur`)
+) ENGINE=MyISAM AUTO_INCREMENT=21 DEFAULT CHARSET=latin1;
+
 -- Export de données de la table nfc.connexion : 5 rows
+DELETE FROM `connexion`;
 /*!40000 ALTER TABLE `connexion` DISABLE KEYS */;
 INSERT INTO `connexion` (`id`, `login`, `password`, `salt`, `createdat`, `updatedat`, `id_utilisateur`) VALUES
 	(3, 'aadmin', '$2a$10$XoaCnf3Uk/Ag7mcIh0ZdtuXsa8fRpz6TH7BrL.rJcBc/8qiOQ9KlK', '$2a$10$XoaCnf3Uk/Ag7mcIh0Zdtu', '2016-03-27 23:12:09', '2016-03-27 23:12:09', 15),
@@ -47,7 +109,20 @@ INSERT INTO `connexion` (`id`, `login`, `password`, `salt`, `createdat`, `update
 	(7, 'ttutu', '$2a$10$mAjN.jJmiAtohfiycsPyIOcmtjlvKuxcEdoLHtf2xMLHFp8DMC61q', '$2a$10$mAjN.jJmiAtohfiycsPyIO', '2016-03-27 23:27:36', '2016-03-27 23:27:36', 19);
 /*!40000 ALTER TABLE `connexion` ENABLE KEYS */;
 
+
+-- Export de la structure de table nfc. emplacement
+CREATE TABLE IF NOT EXISTS `emplacement` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nom_emplacement` varchar(32) NOT NULL,
+  `type` varchar(20) NOT NULL,
+  `nb_place` int(11) NOT NULL,
+  `createdat` datetime NOT NULL,
+  `updatedat` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+
 -- Export de données de la table nfc.emplacement : ~5 rows (environ)
+DELETE FROM `emplacement`;
 /*!40000 ALTER TABLE `emplacement` DISABLE KEYS */;
 INSERT INTO `emplacement` (`id`, `nom_emplacement`, `type`, `nb_place`, `createdat`, `updatedat`) VALUES
 	(1, 'Salle 1', 'Salle', 15, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
@@ -57,7 +132,23 @@ INSERT INTO `emplacement` (`id`, `nom_emplacement`, `type`, `nb_place`, `created
 	(5, 'Restaurant 2', 'Restaurant', 250, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
 /*!40000 ALTER TABLE `emplacement` ENABLE KEYS */;
 
+
+-- Export de la structure de table nfc. lignecommande
+CREATE TABLE IF NOT EXISTS `lignecommande` (
+  `id_commande` int(11) NOT NULL,
+  `id_article` int(11) NOT NULL,
+  `quantite` int(11) NOT NULL,
+  `montant` double NOT NULL,
+  `createdat` datetime NOT NULL,
+  `updatedat` datetime NOT NULL,
+  PRIMARY KEY (`id_commande`,`id_article`),
+  KEY `id_article` (`id_article`),
+  CONSTRAINT `lignecommande_ibfk_1` FOREIGN KEY (`id_commande`) REFERENCES `commande` (`id_commande`),
+  CONSTRAINT `lignecommande_ibfk_2` FOREIGN KEY (`id_article`) REFERENCES `article` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
 -- Export de données de la table nfc.lignecommande : ~7 rows (environ)
+DELETE FROM `lignecommande`;
 /*!40000 ALTER TABLE `lignecommande` DISABLE KEYS */;
 INSERT INTO `lignecommande` (`id_commande`, `id_article`, `quantite`, `montant`, `createdat`, `updatedat`) VALUES
 	(1, 1, 4, 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
@@ -69,7 +160,23 @@ INSERT INTO `lignecommande` (`id_commande`, `id_article`, `quantite`, `montant`,
 	(2, 3, 1, 0, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
 /*!40000 ALTER TABLE `lignecommande` ENABLE KEYS */;
 
+
+-- Export de la structure de table nfc. localisation
+CREATE TABLE IF NOT EXISTS `localisation` (
+  `code_emplacement` int(11) NOT NULL,
+  `id_utilisateur` int(11) NOT NULL,
+  `date_entree` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `createdat` datetime NOT NULL,
+  `updatedat` datetime NOT NULL,
+  PRIMARY KEY (`code_emplacement`,`id_utilisateur`,`date_entree`),
+  KEY `code_emplacement` (`code_emplacement`),
+  KEY `id_utilisateur` (`id_utilisateur`),
+  CONSTRAINT `localisation_ibfk_1` FOREIGN KEY (`code_emplacement`) REFERENCES `emplacement` (`id`),
+  CONSTRAINT `localisation_ibfk_2` FOREIGN KEY (`id_utilisateur`) REFERENCES `utilisateur` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
 -- Export de données de la table nfc.localisation : ~13 rows (environ)
+DELETE FROM `localisation`;
 /*!40000 ALTER TABLE `localisation` DISABLE KEYS */;
 INSERT INTO `localisation` (`code_emplacement`, `id_utilisateur`, `date_entree`, `createdat`, `updatedat`) VALUES
 	(1, 4, '2016-04-16 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
@@ -87,33 +194,126 @@ INSERT INTO `localisation` (`code_emplacement`, `id_utilisateur`, `date_entree`,
 	(5, 19, '2016-04-18 00:00:00', '0000-00-00 00:00:00', '0000-00-00 00:00:00');
 /*!40000 ALTER TABLE `localisation` ENABLE KEYS */;
 
--- Export de données de la table nfc.pointage : ~0 rows (environ)
+
+-- Export de la structure de table nfc. pointage
+CREATE TABLE IF NOT EXISTS `pointage` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id_utilisateur` int(11) NOT NULL,
+  `date_entree` datetime DEFAULT NULL,
+  `date_sorti` datetime DEFAULT NULL,
+  `createdat` datetime NOT NULL,
+  `updatedat` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `id_utilisateur` (`id_utilisateur`),
+  CONSTRAINT `pointage_ibfk_1` FOREIGN KEY (`id_utilisateur`) REFERENCES `utilisateur` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+-- Export de données de la table nfc.pointage : ~1 rows (environ)
+DELETE FROM `pointage`;
 /*!40000 ALTER TABLE `pointage` DISABLE KEYS */;
+INSERT INTO `pointage` (`id`, `id_utilisateur`, `date_entree`, `date_sorti`, `createdat`, `updatedat`) VALUES
+	(1, 15, '2016-04-23 00:00:00', '2016-04-23 00:00:00', '2016-04-23 20:31:27', '2016-04-23 20:32:57');
 /*!40000 ALTER TABLE `pointage` ENABLE KEYS */;
 
+
+-- Export de la structure de table nfc. role
+CREATE TABLE IF NOT EXISTS `role` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nom_role` varchar(32) NOT NULL,
+  `createdat` datetime NOT NULL,
+  `updatedat` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+
 -- Export de données de la table nfc.role : ~2 rows (environ)
+DELETE FROM `role`;
 /*!40000 ALTER TABLE `role` DISABLE KEYS */;
 INSERT INTO `role` (`id`, `nom_role`, `createdat`, `updatedat`) VALUES
 	(1, 'ADMIN', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
 	(2, 'USER', '0000-00-00 00:00:00', '0000-00-00 00:00:00');
 /*!40000 ALTER TABLE `role` ENABLE KEYS */;
 
+
+-- Export de la structure de table nfc. service
+CREATE TABLE IF NOT EXISTS `service` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nom_service` varchar(32) NOT NULL,
+  `createdat` datetime NOT NULL,
+  `updatedat` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+
 -- Export de données de la table nfc.service : ~2 rows (environ)
+DELETE FROM `service`;
 /*!40000 ALTER TABLE `service` DISABLE KEYS */;
 INSERT INTO `service` (`id`, `nom_service`, `createdat`, `updatedat`) VALUES
 	(1, 'Informatique', '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
 	(2, 'RH', '0000-00-00 00:00:00', '0000-00-00 00:00:00');
 /*!40000 ALTER TABLE `service` ENABLE KEYS */;
 
+
+-- Export de la structure de table nfc. tempstravail
+CREATE TABLE IF NOT EXISTS `tempstravail` (
+  `id_utilisateur` int(11) NOT NULL,
+  `temps_travail_jr` int(11) NOT NULL,
+  `credit_heure` int(11) NOT NULL,
+  `createdat` datetime NOT NULL,
+  `updatedat` datetime NOT NULL,
+  KEY `id_utilisateur` (`id_utilisateur`),
+  CONSTRAINT `FK` FOREIGN KEY (`id_utilisateur`) REFERENCES `utilisateur` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
 -- Export de données de la table nfc.tempstravail : ~0 rows (environ)
+DELETE FROM `tempstravail`;
 /*!40000 ALTER TABLE `tempstravail` DISABLE KEYS */;
 /*!40000 ALTER TABLE `tempstravail` ENABLE KEYS */;
 
+
+-- Export de la structure de table nfc. transaction
+CREATE TABLE IF NOT EXISTS `transaction` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id_compte` int(11) NOT NULL,
+  `type_transaction` varchar(7) NOT NULL,
+  `montant` double NOT NULL,
+  `date` date NOT NULL,
+  `id_commande` int(11) NOT NULL,
+  `createdat` datetime NOT NULL,
+  `updatedat` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `id_compte` (`id_compte`,`id_commande`),
+  KEY `id_commande` (`id_commande`),
+  CONSTRAINT `transaction_ibfk_1` FOREIGN KEY (`id_commande`) REFERENCES `commande` (`id_commande`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
 -- Export de données de la table nfc.transaction : ~0 rows (environ)
+DELETE FROM `transaction`;
 /*!40000 ALTER TABLE `transaction` DISABLE KEYS */;
 /*!40000 ALTER TABLE `transaction` ENABLE KEYS */;
 
+
+-- Export de la structure de table nfc. utilisateur
+CREATE TABLE IF NOT EXISTS `utilisateur` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nom` varchar(32) NOT NULL,
+  `prenom` varchar(32) NOT NULL,
+  `mail` varchar(64) NOT NULL,
+  `tel` varchar(15) NOT NULL,
+  `id_service` int(11) NOT NULL,
+  `id_role` int(11) NOT NULL,
+  `id_nfc` int(11) NOT NULL,
+  `createdat` datetime NOT NULL,
+  `updatedat` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `mail` (`mail`),
+  UNIQUE KEY `tel` (`tel`),
+  KEY `fk_role_id` (`id_role`),
+  KEY `fk_service_id` (`id_service`),
+  CONSTRAINT `fk_role_id` FOREIGN KEY (`id_role`) REFERENCES `role` (`id`),
+  CONSTRAINT `fk_service_id` FOREIGN KEY (`id_service`) REFERENCES `service` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=latin1;
+
 -- Export de données de la table nfc.utilisateur : ~5 rows (environ)
+DELETE FROM `utilisateur`;
 /*!40000 ALTER TABLE `utilisateur` DISABLE KEYS */;
 INSERT INTO `utilisateur` (`id`, `nom`, `prenom`, `mail`, `tel`, `id_service`, `id_role`, `id_nfc`, `createdat`, `updatedat`) VALUES
 	(4, 'soso', 'sosoben', 'sosodu27@msn.com', '0147852368', 1, 1, 0, '2016-03-20 13:56:28', '2016-03-27 23:07:05'),

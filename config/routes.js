@@ -66,7 +66,7 @@ module.exports.routes = {
 
   //Recupération, Création, Modification, Suppression POintage user
   '/pointage':'GestionPointageController.userGet',
-  'get /pointage/create':'GestionPointageController.userCreate',
+  'post /pointage/create':'GestionPointageController.userCreate',
 
 
 

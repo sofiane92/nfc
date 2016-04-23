@@ -20,13 +20,40 @@
         <tr>
           <th>date_entree</th>
           <th>date_sortie</th>
+          <th>statut</th>
         </tr>
       </thead>
       <tbody>
-      <% for( var i=0; i<pointages.length; i++){ %>
+      <% for( var i=pointages.length - 1; i >= 0; i--){ %>
+          <%
+            var diff = {}
+            var tmp = pointages[i].date_sorti - pointages[i].date_entree;
+
+            tmp = Math.floor(tmp/1000);             
+            diff.sec = tmp % 60;                    
+
+            tmp = Math.floor((tmp-diff.sec)/60);   
+            diff.min = tmp % 60;                    
+
+            tmp = Math.floor((tmp-diff.min)/60);    
+            diff.hour = tmp % 24;                  
+             
+            tmp = Math.floor((tmp-diff.hour)/24);   
+            diff.day = tmp;
+         %> 
+
         <tr>
           <td> <%= pointages[i].date_entree %> </td>
           <td> <%= pointages[i].date_sorti %> </td>
+          <td> 
+            <% if(pointages[i].date_sorti == null){ %>
+              En cours
+            <% }else{ %>
+              <div>
+                <%= diff.day %>d <%= diff.hour %>h <%= diff.min %>m <%= diff.sec %>s 
+              </div>
+            <% } %> 
+          </td>
         <tr>
       <% } %>
     </tbody>
