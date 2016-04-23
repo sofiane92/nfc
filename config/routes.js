@@ -61,10 +61,14 @@ module.exports.routes = {
 
   //Data entreprise
   '/data':'GestionDonneesController.get',
-  '/frequentation':'GestionDonneesController.getFrequentation',
-  '/localisation':'GestionDonneesController.getLocalisation',
-  
-
+  '/RestaurantFrequentationTotale':'GestionDonneesController.getRestaurantFrequentationTotale',
+  '/RestaurantFrequentationJour':'GestionDonneesController.getRestaurantFrequentationJour',
+  '/SalleFrequentationTotale':'GestionDonneesController.getSalleFrequentationTotale',
+  '/SalleFrequentationJour':'GestionDonneesController.getSalleFrequentationJour',
+  '/SalleAffluence':'GestionDonneesController.getSalleAffluence',
+  '/RestaurantAffluence':'GestionDonneesController.getRestaurantAffluence',
+  '/NombreAchatCE':'GestionDonneesController.getNombreAchatCE',
+  '/NombreAchatCantine':'GestionDonneesController.getNombreAchatCantine',
 
   //'/email':'Email/emailController.sendEmail',
   

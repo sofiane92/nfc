@@ -15,15 +15,17 @@
   <table class="table table table-striped">
   <thead class="thead-inverse">
     <tr>
-      <th>Restaurant</th>
-      <th>Nombre</th>
+      <th><%= donnees[1].Type %> </th>
+      <th>Nombre de places total</th>
+      <th>Disponibilités </th>
     </tr>
   </thead>
   <tbody>
-  <% for( var i=0; i<emplacements.length; i++){ %>
+  <% for( var i=0; i<donnees.length; i++){ %>
     <tr>
-      <td> <%= emplacements[i].nom_emplacement %> </td>
-      <td> <%= emplacements[i].type %> </td>
+      <td> <%= donnees[i].Nom %> </td>
+      <td> <%= donnees[i].Place %> </td>
+      <td> <%= donnees[i].Place - donnees[i].Nombre %> </td>
     <tr>
   <% } %>
 </tbody>

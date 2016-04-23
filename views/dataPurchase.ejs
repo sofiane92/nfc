@@ -1,0 +1,37 @@
+<% include header %>
+
+<% if( typeof messageError !== 'undefined'){ %>
+        <div class="alert alert-danger">
+          <%= messageError %>
+        </div>
+<% } %> 
+<% if (typeof messageSuccess !== 'undefined'){ %>
+        <div class="alert alert-success">
+          <%= messageSuccess %>
+        </div>
+<% } %>
+<br/>
+<div class='table-responsive'>
+  <table class="table table table-striped">
+  <thead class="thead-inverse">
+    <tr>
+      <th><%= donnees[1].Type %></th>
+      <th>Montant unité</th>
+      <th>Nombre d'achat</th>
+      <th>Montant total</th>
+    </tr>
+  </thead>
+  <tbody>
+  <% for( var i=0; i<donnees.length; i++){ %>
+    <tr>
+      <td> <%= donnees[i].Nom %> </td>
+      <td> <%= donnees[i].Prix %>€</td>
+      <td> <%= donnees[i].Nombre %> </td>
+      <td> <%= donnees[i].Prix*donnees[i].Nombre %>€</td>
+    <tr>
+  <% } %>
+</tbody>
+  </table>
+  </div>
+
+<% include footer %>

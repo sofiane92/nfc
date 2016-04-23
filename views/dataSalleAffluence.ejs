@@ -1,0 +1,44 @@
+<% include header %>
+
+<% if( typeof messageError !== 'undefined'){ %>
+        <div class="alert alert-danger">
+          <%= messageError %>
+        </div>
+<% } %> 
+<% if (typeof messageSuccess !== 'undefined'){ %>
+        <div class="alert alert-success">
+          <%= messageSuccess %>
+        </div>
+<% } %>
+<br/>
+<div class='table-responsive'>
+  <table class="table table table-striped">
+  <thead class="thead-inverse">
+    <tr>
+      <th><%= donnees[1].Type %> </th>
+      <th>Nombre de places total</th>
+      <th>Disponibilités </th>
+    </tr>
+  </thead>
+  <tbody>
+  <% for( var i=0; i<donnees.length; i++){ %>
+    <tr>
+      <td> <%= donnees[i].Nom %> </td>
+      <td> <%= donnees[i].Place %> </td>
+      <% if(donnees[i].Nombre==0){ %>
+        <td>Disponible</td> 
+      <% } else { 
+        var now = new Date(); 
+        var entree = new Date(donnees[i].Entree);
+        tmp = now-entree;
+        tmp = 60-Math.floor(tmp/60/1000);    
+      %>
+        <td>Prochaine disponibilité dans <%= tmp %> minutes</td> 
+      <% } %> 
+    <tr>
+  <% } %>
+</tbody>
+  </table>
+  </div>
+
+<% include footer %>
