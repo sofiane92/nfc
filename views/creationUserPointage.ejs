@@ -1,0 +1,36 @@
+<% include header %>
+<% if( typeof messageError !== 'undefined'){ %>
+        <div class="alert alert-danger">
+          <%= messageError %>
+        </div>
+<% } %>
+<% if (typeof messageSuccess !== 'undefined'){ %>
+        <div class="alert alert-success">
+          <%= messageSuccess %>
+        </div>
+<% } %>
+<br/>
+   <form method='post' action='/pointage/create'>
+      <input type="submit" value="Faire un pointage" placeholder="Faire un pointage">
+    </form>
+
+    <div class='table-responsive'>
+      <table class="table table table-striped">
+      <thead class="thead-inverse">
+        <tr>
+          <th>date_entree</th>
+          <th>date_sortie</th>
+        </tr>
+      </thead>
+      <tbody>
+      <% for( var i=0; i<pointages.length; i++){ %>
+        <tr>
+          <td> <%= pointages[i].date_entree %> </td>
+          <td> <%= pointages[i].date_sorti %> </td>
+        <tr>
+      <% } %>
+    </tbody>
+      </table>
+      </div>
+
+<% include footer %>

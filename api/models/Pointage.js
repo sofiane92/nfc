@@ -7,11 +7,11 @@
 
 module.exports = {
   attributes: {
-  	id_utilisateur: {
+    id_utilisateur: {
       model: 'utilisateur'
     },
-    date_entree:'STRING',
-    date_sorti:'STRING',
+    date_entree:'datetime',
+    date_sorti:'datetime',
   },
 };
 

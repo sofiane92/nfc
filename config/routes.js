@@ -33,15 +33,15 @@ module.exports.routes = {
   ***************************************************************************/
 
   '/': 'AuthController.homepage',
-  
-  //Connexion et deconnexion 
+
+  //Connexion et deconnexion
   'get /login': {
     view: 'login'
   },
   'post /login':'AuthController.login',
   '/logout':'AuthController.logout',
-  
-  
+
+
 
   //Recupération, Création, Modification, Suppression Utilisateur
   '/user':'GestionUtilisateurController.get',
@@ -51,7 +51,7 @@ module.exports.routes = {
   'post /user/update/:id':'GestionUtilisateurController.update',
   '/user/delete/:id':'GestionUtilisateurController.delete',
 
-  //Recupération, Création, Modification, Suppression Utilisateur
+  //Recupération, Création, Modification, Suppression POintage
   '/user/:id_utilisateur/pointage':'GestionPointageController.get',
   'get /user/:id_utilisateur/pointage/create':'GestionPointageController.beforecreate',
   'post /user/:id_utilisateur/pointage/create':'GestionPointageController.create',
@@ -69,9 +69,15 @@ module.exports.routes = {
   '/RestaurantAffluence':'GestionDonneesController.getRestaurantAffluence',
   '/NombreAchatCE':'GestionDonneesController.getNombreAchatCE',
   '/NombreAchatCantine':'GestionDonneesController.getNombreAchatCantine',
+  '/frequentation':'GestionDonneesController.getFrequentation',
+  '/localisation':'GestionDonneesController.getLocalisation',
+
+  //Recupération, Création, Modification, Suppression POintage user
+  '/pointage':'GestionPointageController.userGet',
+  'get /pointage/create':'GestionPointageController.userCreate',
 
   //'/email':'Email/emailController.sendEmail',
-  
+
 
   /***************************************************************************
   *                                                                          *
