@@ -127,3 +127,14 @@
 .forgot-password:focus{
     color: rgb(12, 97, 33);
 }
+
+small
+{
+    display: block;
+    margin-top: 1em;
+}
+
+#places
+{
+    
+}

@@ -12,6 +12,7 @@
 <% } %>
 <br/>
 <div class='table-responsive'>
+  <a href='/user/create'> <button type="button" class="btn btn-primary">Nouveau Utilisateur</button></a> 
   <table class="table table table-striped">
   <thead class="thead-inverse">
     <tr>
@@ -32,9 +33,9 @@
       <td> <%= utilisateurs[i].tel %> </td>
       <td> <%= utilisateurs[i].id_role.nom_role %> </td>
       <td> <%= utilisateurs[i].id_service.nom_service %> </td>
+      <td> <a href='/user/<%= utilisateurs[i].id %>/pointage'> <button type="button" class="btn btn-infos"> Pointages</button></a> </td>
       <td> <a href='/user/update/<%= utilisateurs[i].id %>'> <button type="button" class="btn btn-default"> Modifier</button></a> </td>
       <td> <a href='/user/delete/<%= utilisateurs[i].id %>'> <button type="button" class="btn btn-danger"> Supprimer</button></a> </td>
-      <td> <a href='/user/<%= utilisateurs[i].id %>/pointage'> <button type="button" class="btn btn-infos"> Pointages</button></a> </td>
     <tr>
   <% } %>
 </tbody>

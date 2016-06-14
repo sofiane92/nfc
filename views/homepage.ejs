@@ -1,11 +1,20 @@
 <% include header %>
-
-	<a href="#"> Mon Compte </a>
-	<br/>
-	<a href="/pointage"> Mes Pointages </a>
-	<br/>
-	<a href="#"> Mes Paiements </a>
-	<br/>
-	<a href="/data"> Données entreprises </a>
-
+	<% if(req.session.user.id_role.id == 1){ %>
+		<a href="/user" class="btn btn-info btn-block"> Gestion Comptes Utilisateurs </a>
+		<br/>
+		<a href="/user" class="btn btn-primary btn-block"> Gestion Pointages </a>
+		<br/>
+		<a href="#" class="btn btn-info btn-block"> Gestion Paiements </a>
+		<br/>
+		<a href="/data" class="btn btn-primary btn-block"> Données entreprises </a>
+	<% }else{ %>
+		<a href="/user/compte" class="btn btn-info btn-block"> Mon Compte </a>
+		<br/>
+		<a href="/pointage" class="btn btn-primary btn-block"> Mes Pointages </a>
+		<br/>
+		<a href="#" class="btn btn-info btn-block"> Mes Paiements </a>
+		<br/>
+		<a href="/data" class="btn btn-primary btn-block"> Données entreprises </a>
+	<% } %>
 <% include footer %>
+

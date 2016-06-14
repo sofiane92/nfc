@@ -11,46 +11,89 @@
 <% } %>
 <br/>
 <% if(typeof utilisateur == 'undefined'){ %>
-    <form method='post' action='/user/create'>
-    	<input type="text" name="nom" placeHolder="nom">
-    	<input type="text" name="prenom" placeHolder="prenom">
-    	<input type="text" name="mail" placeHolder="mail">
-    	<input type="text" name="tel" placeHolder="tel">
-    	<SELECT name="service" size="1">
-    		<% for(var i=0; i < services.length; i++){ %>
-			<OPTION value= "<%= services[i].id %>"><%= services[i].nom_service %></option>
-			<% } %>	
-		</SELECT>
-		<SELECT name="role" size="1">
-    		<% for(var i=0; i < roles.length; i++){ %>
-			<OPTION value= "<%= roles[i].id %>"><%= roles[i].nom_role %></option>
-			<% } %>		
-		</SELECT>
-    	<input type="submit" value="Creation">
+    <div class="container">
+        <h2>Création d'un utilisateur</h2>
+        <form method='post' action='/user/create' role='form'>
+            <div class="form-group">
+                    <label for="nom">Nom:</label>
+                    <input type="text" class="form-control" name="nom" placeHolder="nom">
+                </div>
+                <div class="form-group">
+                    <label for="prenom">Prénom:</label>
+                    <input type="text" class="form-control" name="prenom" placeHolder="prenom">
+                </div>
+                <div class="form-group">
+                    <label for="mail">Email:</label>
+                    <input type="text" class="form-control" name="mail" placeHolder="mail">
+                </div>
+                <div class="form-group">
+                    <label for="tel">Téléphone:</label>
+                    <input type="text" class="form-control" name="tel" placeHolder="tel">
+                </div>
+                <div class="form-group">
+                  <label for="service">Service:</label>
+                    <SELECT name="service" size="1"  class="form-control">
+                        <% for(var i=0; i < services.length; i++){ %>
+                        <OPTION value= "<%= services[i].id %>"><%= services[i].nom_service %></option>
+                        <% } %> 
+                    </SELECT>
+                </div>
+                <div class="form-group">
+                    <label for="role">Rôle:</label>
+                    <SELECT name="role" size="1"  class="form-control">
+                        <% for(var i=0; i < roles.length; i++){ %>
+                        <OPTION value= "<%= roles[i].id %>"><%= roles[i].nom_role %></option>
+                        <% } %>     
+                    </SELECT>
+                </div>       
+                <button type="submit" class="btn btn-default">Valider</button>
+                <a href='/user'> <button type="button" class="btn btn-default">Annuler</button></a>
 
-    </form>
-  <% }else{ %>
-  	<form method='post' action='/user/update/<%= utilisateur.id %>'>
-    	<input type="text" name="nom" placeHolder="<%= utilisateur.nom %>" value="<%= utilisateur.nom %>">
-    	<input type="text" name="prenom" placeHolder="<%= utilisateur.prenom %>" value="<%= utilisateur.prenom %>">
-    	<input type="text" name="mail" placeHolder="<%= utilisateur.mail %>" value="<%= utilisateur.mail %>">
-    	<input type="text" name="tel" placeHolder="<%= utilisateur.tel %>" value="<%= utilisateur.tel %>">
-    	<SELECT name="service" size="1">
-    		<% for(var i=0; i < services.length; i++){ %>
-    			<%  if( utilisateur.id_service.id == services[i].id) { %>
-    				<OPTION selected value= "<%= services[i].id %>"><%= services[i].nom_service %></option>
-    			<% }else{ %>
-					<OPTION value= "<%= services[i].id %>"><%= services[i].nom_service %></option>
-				<% } %>
-			<% } %>	
-		</SELECT>
-		<SELECT name="role" size="1">
-    		<% for(var i=0; i < roles.length; i++){ %>
-			<OPTION value= "<%= roles[i].id %>"><%= roles[i].nom_role %></option>
-			<% } %>		
-		</SELECT>
-    	<input type="submit" value="Creation">
-
-    </form>
-  <% } %>
+        </form>
+    </div>
+    <% }else{ %>
+        <div class="container">
+            <h2>Modification d'un utilisateur</h2>
+            <form method='post' action='/user/update/<%= utilisateur.id %>' role='form'>
+                <div class="form-group">
+                    <label for="nom">Nom:</label>
+                    <input type="text" class="form-control" name="nom" placeHolder="<%= utilisateur.nom %>" value="<%= utilisateur.nom %>">
+                </div>
+                <div class="form-group">
+                    <label for="prenom">Prénom:</label>
+                    <input type="text" class="form-control" name="prenom" placeHolder="<%= utilisateur.prenom %>" value="<%= utilisateur.prenom %>">
+                </div>
+                <div class="form-group">
+                    <label for="mail">Email:</label>
+                    <input type="text" class="form-control" name="mail" placeHolder="<%= utilisateur.mail %>" value="<%= utilisateur.mail %>">        
+                </div>
+                <div class="form-group">
+                    <label for="tel">Téléphone:</label>
+                    <input type="text" class="form-control" name="tel" placeHolder="<%= utilisateur.tel %>" value="<%= utilisateur.tel %>">
+                </div>
+                <div class="form-group">
+                  <label for="service">Service:</label>
+                  <SELECT name="service" size="1"  class="form-control">
+                    <% for(var i=0; i < services.length; i++){ %>
+                        <%  if( utilisateur.id_service.id == services[i].id) { %>
+                            <OPTION selected value= "<%= services[i].id %>"><%= services[i].nom_service %></option>
+                        <% }else{ %>
+                            <OPTION value= "<%= services[i].id %>"><%= services[i].nom_service %></option>
+                        <% } %>
+                    <% } %> 
+                    </SELECT>
+                </div>
+                <div class="form-group">
+                    <label for="role">Rôle:</label>
+                    <SELECT name="role" size="1"  class="form-control">
+                        <% for(var i=0; i < roles.length; i++){ %>
+                        <OPTION value= "<%= roles[i].id %>"><%= roles[i].nom_role %></option>
+                        <% } %>     
+                    </SELECT>
+                </div>       
+                <button type="submit" class="btn btn-default">Valider</button>
+                <a href='/user'> <button type="button" class="btn btn-default">Annuler</button></a>
+            </form>
+        </div>
+    <% } %>
 <% include footer %>

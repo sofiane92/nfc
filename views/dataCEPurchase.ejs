@@ -1,7 +1,7 @@
 <% include header %>
 
 <ul class="nav nav-tabs">
-  <li class="active dropdown">
+  <li class=" dropdown">
     <a class="dropdown-toggle" data-toggle="dropdown" href="#">Salle<span class="caret"></span></a>
     <ul class="dropdown-menu">
       <li><a href="/SalleAffluence">Disponibilité</a></li>
@@ -22,7 +22,7 @@
       <% } %>
     </ul>
   </li>  
-  <li class=" dropdown">
+  <li class="active dropdown">
     <a class="dropdown-toggle" data-toggle="dropdown" href="/">CE<span class="caret"></span></a>
     <ul class="dropdown-menu">
       <% if(req.session.user.id_role.id == 1){ %>
@@ -44,35 +44,75 @@
           <%= messageSuccess %>
         </div>
 <% } %>
+
+<canvas id="places" height="90"></canvas>
+
 <br/>
 <div class='table-responsive'>
   <table class="table table table-striped">
   <thead class="thead-inverse">
     <tr>
-      <th><%= donnees[1].Type %> </th>
-      <th>Nombre places</th>
-      <th>Statut</th>
+      <th><%= donnees[1].Type %></th>
+      <th>Unité</th>
+      <th>Achat</th>
+      <th>Total</th>
     </tr>
   </thead>
   <tbody>
   <% for( var i=0; i<donnees.length; i++){ %>
     <tr>
       <td> <%= donnees[i].Nom %> </td>
-      <td> <%= donnees[i].Place %> </td>
-      <% if(donnees[i].Nombre==0){ %>
-        <td>Disponible</td> 
-      <% } else { 
-        var now = new Date(); 
-        var entree = new Date(donnees[i].Entree);
-        tmp = now-entree;
-        tmp = 60-Math.floor(tmp/60/1000);    
-      %>
-        <td>Prochaine disponibilité dans <%= tmp %> minutes</td> 
-      <% } %> 
+      <td> <%= donnees[i].Prix %>€</td>
+      <td> <%= donnees[i].Nombre %> </td>
+      <td> <%= donnees[i].Prix*donnees[i].Nombre %>€</td>
     <tr>
   <% } %>
 </tbody>
   </table>
   </div>
+
+
+<script>
+    var dataArray = [];
+    var labelArray = [];
+    <% for( var i=0; i<donnees.length; i++){ %>
+      dataArray.push(<%= donnees[i].Prix*donnees[i].Nombre %>)
+      labelArray.push("<%= donnees[i].Nom %>")
+    <% } %>
+    // line chart data
+    var placeData = {
+        labels : labelArray,
+        datasets : [
+        {
+            label : "Dépense totale en Euros (€)",
+            fillColor : "rgba(172,194,132,0.4)",
+            strokeColor : "#ACC26D",
+            pointColor : "#fff",
+            pointStrokeColor : "#9DB86D",
+            backgroundColor: [
+                "#FF6384",
+                "#36A2EB",
+                "#FFCE56"
+            ],
+            hoverBackgroundColor: [
+                "#FF6384",
+                "#36A2EB",
+                "#FFCE56"
+            ],
+            data : dataArray,
+        }
+    ]
+    }
+    // get line chart canvas
+    var places = document.getElementById('places').getContext('2d');
+    // draw line chart
+    //new Chart(places).Line(placeData);
+    var myNewChart = new Chart(places , {
+        type: "bar",
+        data: placeData, 
+    });
+
+
+</script>
 
 <% include footer %>

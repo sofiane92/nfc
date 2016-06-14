@@ -61,20 +61,21 @@ module.exports.routes = {
 
   //Data entreprise
   '/data':'GestionDonneesController.get',
-  '/RestaurantFrequentationTotale':'GestionDonneesController.getRestaurantFrequentationTotale',
-  '/RestaurantFrequentationJour':'GestionDonneesController.getRestaurantFrequentationJour',
   '/SalleFrequentationTotale':'GestionDonneesController.getSalleFrequentationTotale',
   '/SalleFrequentationJour':'GestionDonneesController.getSalleFrequentationJour',
   '/SalleAffluence':'GestionDonneesController.getSalleAffluence',
-  '/RestaurantAffluence':'GestionDonneesController.getRestaurantAffluence',
-  '/NombreAchatCE':'GestionDonneesController.getNombreAchatCE',
-  '/NombreAchatCantine':'GestionDonneesController.getNombreAchatCantine',
-  '/frequentation':'GestionDonneesController.getFrequentation',
-  '/localisation':'GestionDonneesController.getLocalisation',
+  '/CantineFrequentationTotale':'GestionDonneesController.getCantineFrequentationTotale',
+  '/CantineFrequentationJour':'GestionDonneesController.getCantineFrequentationJour',
+  '/CantineAffluence':'GestionDonneesController.getCantineAffluence',
+  '/CantineNombreAchat':'GestionDonneesController.getCantineNombreAchat',
+  '/CENombreAchat':'GestionDonneesController.getCENombreAchat',
+  '/CETopTenSortie':'GestionDonneesController.getCETopTenSortie',
+  //'/frequentation':'GestionDonneesController.getFrequentation',
+  //'/localisation':'GestionDonneesController.getLocalisation',
 
   //Recupération, Création, Modification, Suppression POintage user
   '/pointage':'GestionPointageController.userGet',
-  'get /pointage/create':'GestionPointageController.userCreate',
+  'post /pointage/create':'GestionPointageController.userCreate',
 
   //'/email':'Email/emailController.sendEmail',
 

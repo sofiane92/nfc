@@ -31,43 +31,43 @@ module.exports = {
 		})
 	},
 
-	// Affiche la page '/RestaurantFrequentationTotale' 
-	getRestaurantFrequentationTotale:function(req,res){
-		donneesController.getRestaurantFrequentationTotale(function(obj){
+	// Affiche la page '/CantineFrequentationTotale' 
+	getCantineFrequentationTotale:function(req,res){
+		donneesController.getCantineFrequentationTotale(function(obj){
 			if(obj.status){
 				var messageSuccess = req.session.success;
 				var messageError = req.session.error;
 				delete req.session.error;
 				delete req.session.success;
-				res.view('dataEnterprise',{donnees: obj.donnees, messageError: messageError, messageSuccess : messageSuccess, title: 'Données Restaurant Entreprise' });
+				res.view('dataCantineEnterpriseTotal',{donnees: obj.donnees, messageError: messageError, messageSuccess : messageSuccess, title: 'Données Cantine Entreprise' });
 				return;
 			}
 		})
 	},
 
-	// Affiche la page '/getRestaurantFrequentationJour' 
-	getRestaurantFrequentationJour:function(req,res){
-		donneesController.getRestaurantFrequentationJour(function(obj){
+	// Affiche la page '/getCantineFrequentationJour' 
+	getCantineFrequentationJour:function(req,res){
+		donneesController.getCantineFrequentationJour(function(obj){
 			if(obj.status){
 				var messageSuccess = req.session.success;
 				var messageError = req.session.error;
 				delete req.session.error;
 				delete req.session.success;
-				res.view('dataEnterprise',{donnees: obj.donnees, messageError: messageError, messageSuccess : messageSuccess, title: 'Données Restaurant Entreprise' });
+				res.view('dataCantineEnterprise',{donnees: obj.donnees, messageError: messageError, messageSuccess : messageSuccess, title: 'Données Cantine Entreprise' });
 				return;
 			}
 		})
 	},
 
-	// Affiche la page '/getRestaurantAffluence' 
-	getRestaurantAffluence:function(req,res){
-		donneesController.getRestaurantAffluence(function(obj){
+	// Affiche la page '/getCantineAffluence' 
+	getCantineAffluence:function(req,res){
+		donneesController.getCantineAffluence(function(obj){
 			if(obj.status){
 				var messageSuccess = req.session.success;
 				var messageError = req.session.error;
 				delete req.session.error;
 				delete req.session.success;
-				res.view('dataRestaurantAffluence',{donnees: obj.donnees, messageError: messageError, messageSuccess : messageSuccess, title: 'Données Restaurant Entreprise' });
+				res.view('dataCantineAffluence',{donnees: obj.donnees, messageError: messageError, messageSuccess : messageSuccess, title: 'Données Cantine Entreprise' });
 				return;
 			}
 		})
@@ -81,7 +81,7 @@ module.exports = {
 				var messageError = req.session.error;
 				delete req.session.error;
 				delete req.session.success;
-				res.view('dataEnterprise',{donnees: obj.donnees, messageError: messageError, messageSuccess : messageSuccess, title: 'Données Salle de réunion' });
+				res.view('dataSalleEnterpriseTotal',{donnees: obj.donnees, messageError: messageError, messageSuccess : messageSuccess, title: 'Données Salle de réunion' });
 				return;
 			}
 		})
@@ -95,7 +95,7 @@ module.exports = {
 				var messageError = req.session.error;
 				delete req.session.error;
 				delete req.session.success;
-				res.view('dataEnterprise',{donnees: obj.donnees, messageError: messageError, messageSuccess : messageSuccess, title: 'Données Salle de réunion' });
+				res.view('dataSalleEnterprise',{donnees: obj.donnees, messageError: messageError, messageSuccess : messageSuccess, title: 'Données Salle de réunion' });
 				return;
 			}
 		})
@@ -115,27 +115,27 @@ module.exports = {
 		})
 	},
 
-	getNombreAchatCE:function(req,res){
-		donneesController.getNombreAchatCE(function(obj){
+	getCENombreAchat:function(req,res){
+		donneesController.getCENombreAchat(function(obj){
 			if(obj.status){
 				var messageSuccess = req.session.success;
 				var messageError = req.session.error;
 				delete req.session.error;
 				delete req.session.success;
-				res.view('dataPurchase',{donnees: obj.donnees, messageError: messageError, messageSuccess : messageSuccess, title: 'Données Salle de réunion' });
+				res.view('dataCEPurchase',{donnees: obj.donnees, messageError: messageError, messageSuccess : messageSuccess, title: 'Données Comité Entreprise' });
 				return;
 			}
 		})
 	},
 
-	getNombreAchatCantine:function(req,res){
-		donneesController.getNombreAchatCantine(function(obj){
+	getCantineNombreAchat:function(req,res){
+		donneesController.getCantineNombreAchat(function(obj){
 			if(obj.status){
 				var messageSuccess = req.session.success;
 				var messageError = req.session.error;
 				delete req.session.error;
 				delete req.session.success;
-				res.view('dataPurchase',{donnees: obj.donnees, messageError: messageError, messageSuccess : messageSuccess, title: 'Données Salle de réunion' });
+				res.view('dataCantinePurchase',{donnees: obj.donnees, messageError: messageError, messageSuccess : messageSuccess, title: 'Données Cantine Entreprise' });
 				return;
 			}
 		})

@@ -165,6 +165,5 @@ module.exports = {
 			return res.view('gestionUtilisateur',{utilisateurs: [], err: obj.err});
 		})
 	}
-	
 };
 

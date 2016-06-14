@@ -1,0 +1,117 @@
+<% include header %>
+
+<ul class="nav nav-tabs">
+  <li class=" dropdown">
+    <a class="dropdown-toggle" data-toggle="dropdown" href="#">Salle<span class="caret"></span></a>
+    <ul class="dropdown-menu">
+      <li><a href="/SalleAffluence">Disponibilité</a></li>
+      <% if(req.session.user.id_role.id == 1){ %>
+        <li><a href="/SalleFrequentationJour">Fréquentation du Jour</a></li>
+        <li><a href="/SalleFrequentationTotale">Fréquentation Totale</a></li>
+      <% } %>
+    </ul>
+  </li>
+  <li class="active dropdown">
+    <a class="dropdown-toggle" data-toggle="dropdown" href="/">Cantine<span class="caret"></span></a>
+    <ul class="dropdown-menu">
+      <li><a href="/CantineAffluence">Affluence</a></li>
+        <% if(req.session.user.id_role.id == 1){ %>
+        <li><a href="/CantineFrequentationJour">Fréquentation du Jour</a></li>
+        <li><a href="/CantineFrequentationTotale">Fréquentation Totale</a></li>
+        <li><a href="/CantineNombreAchat">Achats</a></li> 
+      <% } %>
+    </ul>
+  </li>  
+  <li class=" dropdown">
+    <a class="dropdown-toggle" data-toggle="dropdown" href="/">CE<span class="caret"></span></a>
+    <ul class="dropdown-menu">
+      <% if(req.session.user.id_role.id == 1){ %>
+        <li><a href="/CENombreAchat">Achats</a></li>
+      <% }else{ %>
+        <li><a href="/CETopTenSortie">Top 10 des sorties</a></li>      
+      <% } %>
+    </ul>
+  </li>
+</ul>
+
+<% if( typeof messageError !== 'undefined'){ %>
+        <div class="alert alert-danger">
+          <%= messageError %>
+        </div>
+<% } %> 
+<% if (typeof messageSuccess !== 'undefined'){ %>
+        <div class="alert alert-success">
+          <%= messageSuccess %>
+        </div>
+<% } %>
+<br/>
+<div display:"flex">
+<% for( var i=0; i<donnees.length; i++){ %>
+  <div>
+    <h3><%= donnees[i].Nom %></h3>
+    <canvas id="places<%= i %>" class="cantinePie" height="50"></canvas>
+  </div>
+<% } %>
+<div>
+<div class='table-responsive'>
+  <table class="table table table-striped">
+    <thead class="thead-inverse">
+      <tr>
+        <th><%= donnees[1].Type %> </th>
+        <th>Places Totales</th>
+        <th>Places restantes</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% for( var i=0; i<donnees.length; i++){ %>
+        <tr>
+          <td> <%= donnees[i].Nom %> </td>
+          <td> <%= donnees[i].Place %> </td>
+          <td> <%= donnees[i].Place - donnees[i].Nombre %> </td>
+        <tr>
+      <% } %>
+    </tbody>
+  </table>
+</div>
+
+<script>
+<% for( var i=0; i<donnees.length; i++){ %>
+
+    var dataArray = [<%= donnees[i].Nombre %> ,<%= donnees[i].Place - donnees[i].Nombre %> ];
+    var labelArray = ["Places occupées","Places restantes"];
+    // line chart data
+    var placeData = {
+        labels : labelArray,
+        datasets : [
+        {
+            fillColor : "rgba(172,194,132,0.4)",
+            strokeColor : "#ACC26D",
+            pointColor : "#fff",
+            pointStrokeColor : "#9DB86D",
+            backgroundColor: [
+                "#FF6384",
+                "#36A2EB",
+                "#FFCE56"
+            ],
+            hoverBackgroundColor: [
+                "#FF6384",
+                "#36A2EB",
+                "#FFCE56"
+            ],
+            data : dataArray,
+        }
+    ]
+    }
+    // get line chart canvas
+    var places = document.getElementById('places<%= i %>').getContext('2d');
+    // draw line chart
+    //new Chart(places).Line(placeData);
+    var myNewChart = new Chart(places , {
+        type: "pie",
+        data: placeData, 
+    });
+
+<% } %>
+</script>
+
+<% include footer %>
