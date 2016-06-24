@@ -38,5 +38,8 @@
     "url": "git://github.com/anonymous node/sails user/nfc.git"
   },
   "author": "anonymous node/sails user",
-  "license": ""
+  "license": "",
+  "devDependencies": {
+    "grunt": "^0.4.5"
+  }
 }

@@ -36,6 +36,7 @@ module.exports = {
 				   .populate('id_role')
 				   .populate('id_service')
 				   .exec(function(err,utilisateur){
+				   	console.log(utilisateur);
 						if(err || utilisateur.length == 0){
 							done({status:false, error : err});
 						}
@@ -57,6 +58,7 @@ module.exports = {
 			id_nfc : 0
 		}
 		Utilisateur.create(utilisateur, function(err,ok){
+			console.log(err);
 			if(err){
 				done({status:false, error : err});
 			}

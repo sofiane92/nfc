@@ -9,13 +9,13 @@ module.exports = {
 	get:function(done){
 
 		Pointage.find()
-				   .populate('id_utilisateur')
-				   .exec(function(err,pointages){
-						if(err || pointages.length == 0){
-							done({status:false, error : err});
-						}
-						done({status:true, pointages : pointages});
-					})
+		   .populate('id_utilisateur')
+		   .exec(function(err,pointages){
+				if(err || pointages.length == 0){
+					done({status:false, error : err});
+				}
+				done({status:true, pointages : pointages});
+			})
 	},
 	getAllByUser:function(id_utilisateur,done){
 
@@ -49,12 +49,12 @@ module.exports = {
 			return new Date(date[2], date[1], date[0], time[1], date[0])
 		}
 
-		Pointage.query("SELECT * FROM pointage WHERE date_sorti IS NULL ORDER BY date_entree DESC LIMIT 1", function(err, pointages){
+		Pointage.query("SELECT * FROM pointage WHERE date_sortie IS NULL ORDER BY date_entree DESC LIMIT 1", function(err, pointages){
 			if(err) return done({status:false, error : err});
 
 			if( pointages.length != 0 ){
 				var pointage = pointages[0];
-				pointage.date_sorti = new Date();
+				pointage.date_sortie = new Date();
 
 				Pointage.update(pointage.id, pointage, function(err,ok){
 					if(err){
@@ -69,7 +69,7 @@ module.exports = {
 				var pointage = {
 					id_utilisateur : req.session.user.id,
 					date_entree : new Date(),
-					date_sorti : null
+					date_sortie : null
 				}
 
 				Pointage.create(pointage, function(err,ok){
@@ -95,13 +95,13 @@ module.exports = {
 			var explode = string.split(" ")
 			var date = explode[0].split("-")
 			var time = explode[1].split(":")
-			return new Date(date[2], date[1], date[0], time[1], date[0])
+			return date[2]+"-"+date[1]+"-"+date[0]+" "+time[0]+":"+time[1]+":00"
 		}
-
+		
 		var pointage= {
 			id_utilisateur : req.param('id_utilisateur'),
 			date_entree : format_date(req.param('date_entree')),
-			date_sorti : format_date(req.param('date_sorti'))
+			date_sortie : format_date(req.param('date_sortie'))
 		}
 		Pointage.create(pointage, function(err,ok){
 			if(err){
@@ -119,14 +119,17 @@ module.exports = {
 			var explode = string.split(" ")
 			var date = explode[0].split("-")
 			var time = explode[1].split(":")
-			return new Date(date[2], date[1], date[0], time[1], date[0])
+			return date[2]+"-"+date[1]+"-"+date[0]+" "+time[0]+":"+time[1]+":00"
 		}
 
 		var pointage= {
 			id_utilisateur : req.param('id_utilisateur'),
-			date_entree : format_date(req.param('date_entree')),
-			date_sorti : format_date(req.param('date_sorti')),
+			date_entree : format_date( req.param('date_entree') ),
+			date_sortie : format_date( req.param('date_sortie') ),
 		}
+
+		console.log( pointage )
+
 		Pointage.update({id:req.param('id')},pointage).exec(function(err,update){
 			if (err) {
 				done({status:false,error:err});

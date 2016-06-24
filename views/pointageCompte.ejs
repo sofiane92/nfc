@@ -1,0 +1,88 @@
+<% include header %>
+<% if( typeof messageError !== 'undefined'){ %>
+        <div class="alert alert-danger">
+          <%= messageError %>
+        </div>
+<% } %>
+<% if (typeof messageSuccess !== 'undefined'){ %>
+        <div class="alert alert-success">
+          <%= messageSuccess %>
+        </div>
+<% } %>
+<br/>
+    <h2>Mes pointages</h2>
+
+   <form method='post' action='/pointage/create'>
+      <input class="btn btn-primary" type="submit" value="Faire un pointage" placeholder="Faire un pointage">
+    </form>
+
+    <div class='table-responsive'>
+      <table class="table table table-striped">
+      <thead class="thead-inverse">
+        <tr>
+          <th>Date d'entrée</th>
+          <th>Date de sortie</th>
+          <th>Statut</th>
+        </tr>
+      </thead>
+      <tbody>
+      <% for( var i=pointages.length - 1; i >= 0; i--){ %>
+          <%
+            var diff = {}
+            var tmp = pointages[i].date_sortie - pointages[i].date_entree;
+
+            tmp = Math.floor(tmp/1000);             
+            diff.sec = tmp % 60;                    
+
+            tmp = Math.floor((tmp-diff.sec)/60);   
+            diff.min = tmp % 60;                    
+
+            tmp = Math.floor((tmp-diff.min)/60);    
+            diff.hour = (tmp % 24);                  
+            if(diff.hour>5){
+              diff.hour = diff.hour - 2; 
+            }
+            tmp = Math.floor((tmp-diff.hour)/24);   
+            diff.day = tmp;
+
+            format_date = function(date){
+              var year = date.getFullYear();
+              var month = date.getMonth() >= 10 ? date.getMonth() : "0"+(date.getMonth()+1);
+              var day = date.getDay() >= 10 ? date.getDay() : (date.getDay()+12);
+
+              var hour = date.getHours() >= 10 ? date.getHours() : "0"+date.getHours();
+              var minute = date.getMinutes() >= 10 ? date.getMinutes() : "0"+date.getMinutes();
+              var second = "00";
+
+              return day+"-"+month+"-"+year+" "+hour+":"+minute;
+            }
+
+            //Date Entrée
+            var e = new Date(pointages[i].date_entree);
+            var dateEntree = format_date(e);
+
+            //Date Sortie
+            var s = new Date(pointages[i].date_sortie);
+            var dateSortie = format_date(s);
+
+
+         %> 
+
+        <tr>
+          <td> <%= dateEntree %> </td>
+          <% if(pointages[i].date_sortie == null){ %>
+            <td> En attente </td>
+            <td> En cours </td>
+          <% }else{ %>
+            <td> <%= dateSortie %> </td>
+            <td> <%= diff.hour %>h <%= diff.min %>m <%= diff.sec %>s </div>
+          <% } %> 
+        <tr>
+      <% } %>
+    </tbody>
+      </table>
+
+<a href='/'> <button type="button" class="btn btn-default green"> Retour</button></a> 
+      </div>
+
+<% include footer %>

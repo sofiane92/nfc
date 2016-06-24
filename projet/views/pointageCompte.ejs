@@ -1,0 +1,73 @@
+<% include header %>
+<% if( typeof messageError !== 'undefined'){ %>
+        <div class="alert alert-danger">
+          <%= messageError %>
+        </div>
+<% } %>
+<% if (typeof messageSuccess !== 'undefined'){ %>
+        <div class="alert alert-success">
+          <%= messageSuccess %>
+        </div>
+<% } %>
+<br/>
+    <h2>Mes pointages</h2>
+
+   <form method='post' action='/pointage/create'>
+      <input class="btn btn-primary" type="submit" value="Faire un pointage" placeholder="Faire un pointage">
+    </form>
+
+    <div class='table-responsive'>
+      <table class="table table table-striped">
+      <thead class="thead-inverse">
+        <tr>
+          <th>Date d'entrée</th>
+          <th>Date de sortie</th>
+          <th>Statut</th>
+        </tr>
+      </thead>
+      <tbody>
+      <% for( var i=pointages.length - 1; i >= 0; i--){ %>
+          <%
+            var diff = {}
+            var tmp = pointages[i].date_sortie - pointages[i].date_entree;
+
+            tmp = Math.floor(tmp/1000);             
+            diff.sec = tmp % 60;                    
+
+            tmp = Math.floor((tmp-diff.sec)/60);   
+            diff.min = tmp % 60;                    
+
+            tmp = Math.floor((tmp-diff.min)/60);    
+            diff.hour = tmp % 24;                  
+             
+            tmp = Math.floor((tmp-diff.hour)/24);   
+            diff.day = tmp;
+
+            //Date Entrée
+            var e = new Date(pointages[i].date_entree);
+            var dateEntree = ("0" + e.getDate()).slice(-2) + "-" + ("0"+(e.getMonth()+1)).slice(-2) + "-" + e.getFullYear() + " " + ("0" + e.getHours()).slice(-2) + ":" + ("0" + e.getMinutes()).slice(-2) + ":" + ("0" + e.getSeconds()).slice(-2);
+
+            //Date Sortie
+            var s = new Date(pointages[i].date_sortie);
+            var dateSortie = ("0" + s.getDate()).slice(-2) + "-" + ("0"+(s.getMonth()+1)).slice(-2) + "-" + s.getFullYear() + " " + ("0" + s.getHours()).slice(-2) + ":" + ("0" + s.getMinutes()).slice(-2) + ":" + ("0" + s.getSeconds()).slice(-2);
+
+         %> 
+
+        <tr>
+          <td> <%= dateEntree %> </td>
+          <% if(pointages[i].date_sortie == null){ %>
+            <td> En attente </td>
+            <td> En cours </td>
+          <% }else{ %>
+            <td> <%= dateSortie %> </td>
+            <td> <%= diff.hour %>h <%= diff.min %>m <%= diff.sec %>s </div>
+          <% } %> 
+        <tr>
+      <% } %>
+    </tbody>
+      </table>
+
+<a href='/'> <button type="button" class="btn btn-default green"> Retour</button></a> 
+      </div>
+
+<% include footer %>

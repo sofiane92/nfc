@@ -1,0 +1,57 @@
+<% include header %>
+<% if( typeof messageError !== 'undefined'){ %>
+        <div class="alert alert-danger">
+          <%= messageError %>
+        </div>
+<% } %>
+<% if (typeof messageSuccess !== 'undefined'){ %>
+        <div class="alert alert-success">
+          <%= messageSuccess %>
+        </div>
+<% } %>
+<br/>
+
+<% if(typeof pointage == 'undefined'){ %>
+    <h2>Création d'un pointage</h2>
+
+    <form method='post' action='/user/<%= id_utilisateur %>/pointage/create'>
+    	<input type="text" class="datetimepicker" name="date_entree" placeHolder="date_entree">
+    	<input type="text" class="datetimepicker" name="date_sortie" placeHolder="date_sortie">
+    	<input type="submit" value="Creation">
+
+    </form>
+  <% }else{ %>
+      <h2>Création d'un pointage</h2>
+
+  	<form method='post' action='/user/<%= id_utilisateur %>/pointage/update/<%= pointage.id %>'>
+    	<input type="text" class="datetimepicker" name="date_entree" placeHolder="<%= pointage.date_entree %>" value="<%= pointage.date_entree %>">
+    	<input type="text" class="datetimepicker" name="date_sortie" placeHolder="<%= pointage.date_sortie %>" value="<%= pointage.date_sortie %>">
+    	<input type="submit" value="Creation">
+
+    </form>
+  <% } %>
+
+<% include footer %>
+<script>
+  $(document).on("ready", function(){
+
+    format_date = function(date){
+      var year = date.getFullYear();
+      var month = date.getMonth() >= 10 ? date.getMonth() : "0"+(date.getMonth()+1);
+      var day = date.getDay() >= 10 ? date.getDay() : (date.getDay()+12);
+
+      var hour = date.getHours() >= 10 ? date.getHours() : "0"+date.getHours();
+      var minute = date.getMinutes() >= 10 ? date.getMinutes() : "0"+date.getMinutes();
+      var second = "00";
+
+      return day+"-"+month+"-"+year+" "+hour+":"+minute;
+    }
+
+    $(".datetimepicker").each(function(){
+      var date = new Date($(this).val());
+      console.log(date);
+      $(this).val(format_date(date));
+     // $(this).val( (date.getDay() >= 10 ? date.getDay() : "0"+date.getDay() ) +"-"+ (date.getMonth() >= 10 ? date.getMonth() : "0"+date.getMonth() ) +"-"+date.getFullYear()+" "+(date.getHours() >= 10 ? date.getHours() : "0"+date.getHours() )+":"+(date.getMinutes() >= 10 ? date.getMinutes() : "0"+date.getMinutes() ) )
+    })
+  });
+</script>

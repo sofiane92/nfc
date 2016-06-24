@@ -1,0 +1,51 @@
+<% include header %>
+<% if( typeof messageError !== 'undefined'){ %>
+        <div class="alert alert-danger">
+          <%= messageError %>
+        </div>
+<% } %>
+<% if (typeof messageSuccess !== 'undefined'){ %>
+        <div class="alert alert-success">
+          <%= messageSuccess %>
+        </div>
+<% } %>
+<br/>
+    <h2>Mes paiements</h2>
+
+    <div class='table-responsive'>
+      <table class="table table table-striped">
+      <thead class="thead-inverse">
+        <tr>
+          <th>Date</th>
+          <th>Numéro de commande</th>
+          <th>Article</th>
+          <th>Quantité</th>
+          <th>Prix Total</th>
+          <th>Type de transaction</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+      <% for( var i=paiements.length - 1; i >= 0; i--){ %>
+
+        <tr>
+          <td> <%= paiements[i].date %> </td>
+          <td> <%= paiements[i].id_commande %> </td>
+          <td> <%= paiements[i].nom_article %> </td>
+          <td> <%= paiements[i].quantite %> </td>
+          <td> <%= paiements[i].prix_total %> </td>
+          <td> <%= paiements[i].type_transaction %> </td>
+          <td> 
+          <% if(paiements[i].type_transaction == "Débit"){ %>
+            <a href='#'> <button type="button" class="btn btn-default">Remboursement</button></a>
+          <% } %> 
+           </td>
+        <tr>
+      <% } %>
+    </tbody>
+      </table>
+
+<a href='/'> <button type="button" class="btn btn-default green"> Retour</button></a> 
+      </div>
+
+<% include footer %>

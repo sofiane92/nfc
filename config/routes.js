@@ -35,47 +35,56 @@ module.exports.routes = {
   '/': 'AuthController.homepage',
 
   //Connexion et deconnexion
-  'get /login': {
-    view: 'login'
-  },
+  'get /login': 'AuthController.pageLogin',
+  'get /newmdp': 'AuthController.pageNewmdp',
   'post /login':'AuthController.login',
   '/logout':'AuthController.logout',
-
+  'post /newmdp' : 'AuthController.newmdp',
+  'get /newmdp/:token' : 'AuthController.beforeupdatenewmdp',
+  'post /newmdp/confirme' : 'AuthController.updatenewmdp',
 
 
   //Recupération, Création, Modification, Suppression Utilisateur
-  '/user':'GestionUtilisateurController.get',
-  'get /user/create':'GestionUtilisateurController.beforecreate',
-  'post /user/create':'GestionUtilisateurController.create',
-  'get /user/update/:id':'GestionUtilisateurController.beforeupdate',
-  'post /user/update/:id':'GestionUtilisateurController.update',
-  '/user/delete/:id':'GestionUtilisateurController.delete',
+  '/user':'GestionUtilisateurAdminController.get',
+  'get /user/create':'GestionUtilisateurAdminController.beforecreate',
+  'post /user/create':'GestionUtilisateurAdminController.create',
+  'get /user/update/:id':'GestionUtilisateurAdminController.beforeupdate',
+  'post /user/update/:id':'GestionUtilisateurAdminController.update',
+  '/user/delete/:id':'GestionUtilisateurAdminController.delete',
+  '/user/compte':'GestionUtilisateurController.compte',
 
-  //Recupération, Création, Modification, Suppression POintage
+  //Recupération, Création, Modification, Suppression Pointage
   '/user/:id_utilisateur/pointage':'GestionPointageController.get',
   'get /user/:id_utilisateur/pointage/create':'GestionPointageController.beforecreate',
   'post /user/:id_utilisateur/pointage/create':'GestionPointageController.create',
   'get /user/:id_utilisateur/pointage/update/:id':'GestionPointageController.beforeupdate',
   'post /user/:id_utilisateur/pointage/update/:id':'GestionPointageController.update',
   '/user/:id_utilisateur/pointage/delete/:id':'GestionPointageController.delete',
+  //Recupération, Création, Modification, Suppression Pointage user
+  '/pointageCompte':'GestionPointageController.userGet',
+  'post /pointage/create':'GestionPointageController.userCreate',
+  '/pointage':'GestionPointageController.getPointageUsers',
+  
+
+  //Paiement
+  //'/user/:id_utilisateur/paiement/remboursement/:id_ligneCommande':'GestionPaiementAdminController.createPaiementRemboursement',
+  '/user/:id_utilisateur/paiement':'GestionPaiementAdminController.get',
+  '/paiementCompte':'GestionPaiementAdminController.getPaiementCompte',
+  '/paiement':'GestionPaiementAdminController.getPaiementUsers',
+
 
   //Data entreprise
   '/data':'GestionDonneesController.get',
-  '/SalleFrequentationTotale':'GestionDonneesController.getSalleFrequentationTotale',
-  '/SalleFrequentationJour':'GestionDonneesController.getSalleFrequentationJour',
+  '/SalleFrequentationTotale':'GestionDonneesAdminController.getSalleFrequentationTotale',
+  '/SalleFrequentationJour':'GestionDonneesAdminController.getSalleFrequentationJour',
   '/SalleAffluence':'GestionDonneesController.getSalleAffluence',
-  '/CantineFrequentationTotale':'GestionDonneesController.getCantineFrequentationTotale',
-  '/CantineFrequentationJour':'GestionDonneesController.getCantineFrequentationJour',
+  '/CantineFrequentationTotale':'GestionDonneesAdminController.getCantineFrequentationTotale',
+  '/CantineFrequentationJour':'GestionDonneesAdminController.getCantineFrequentationJour',
   '/CantineAffluence':'GestionDonneesController.getCantineAffluence',
-  '/CantineNombreAchat':'GestionDonneesController.getCantineNombreAchat',
-  '/CENombreAchat':'GestionDonneesController.getCENombreAchat',
+  '/CantineNombreAchat':'GestionDonneesAdminController.getCantineNombreAchat',
+  '/CENombreAchat':'GestionDonneesAdminController.getCENombreAchat',
   '/CETopTenSortie':'GestionDonneesController.getCETopTenSortie',
-  //'/frequentation':'GestionDonneesController.getFrequentation',
-  //'/localisation':'GestionDonneesController.getLocalisation',
 
-  //Recupération, Création, Modification, Suppression POintage user
-  '/pointage':'GestionPointageController.userGet',
-  'post /pointage/create':'GestionPointageController.userCreate',
 
   //'/email':'Email/emailController.sendEmail',
 

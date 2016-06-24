@@ -1,0 +1,65 @@
+<% include header %>
+
+<% if( typeof messageError !== 'undefined'){ %>
+        <div class="alert alert-danger">
+          <%= messageError %>
+        </div>
+<% } %> 
+<% if (typeof messageSuccess !== 'undefined'){ %>
+        <div class="alert alert-success">
+          <%= messageSuccess %>
+        </div>
+<% } %>
+<br/>
+    <h2>Gestion des pointages utilisateur</h2>
+    <!-- <a href='/user/<%= id_utilisateur %>/pointage/create'> <button type="button" class="btn btn-primary green"> Nouveau Pointage</button></a> --!>
+<br/> 
+
+<div class='table-responsive'>
+  <table class="table table table-striped">
+  <thead class="thead-inverse">
+    <tr>
+      <th>Date d'entrée</th>
+      <th>Date de sortie</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+  <% for( var i=pointages.length-1; i>=0; i--){ 
+    format_date = function(date){
+      var year = date.getFullYear();
+      var month = date.getMonth() >= 10 ? date.getMonth() : "0"+(date.getMonth()+1);
+      var day = date.getDay() >= 10 ? date.getDay() : (date.getDay()+12);
+
+      var hour = date.getHours() >= 10 ? date.getHours() : "0"+date.getHours();
+      var minute = date.getMinutes() >= 10 ? date.getMinutes() : "0"+date.getMinutes();
+      var second = "00";
+
+      return day+"-"+month+"-"+year+" "+hour+":"+minute;
+    }
+
+    //Date Entrée
+    var e = new Date(pointages[i].date_entree);
+    var dateEntree = format_date(e);
+
+    //Date Sortie
+    var s = new Date(pointages[i].date_sortie);
+    var dateSortie = format_date(s);
+  %>
+    <tr>
+      <td> <%= dateEntree %> </td>
+          <% if(pointages[i].date_sortie == null){ %>
+            <td> En attente </td>
+          <% }else{ %>
+            <td> <%= dateSortie %> </td>
+          <% } %> 
+      <td> <a href='/user/<%= id_utilisateur %>/pointage/update/<%= pointages[i].id %>'> <button type="button" class="btn btn-default"> Modifier</button></a> </td>
+      <td> <a href='/user/<%= id_utilisateur %>/pointage/delete/<%= pointages[i].id %>'> <button type="button" class="btn btn-danger"> Supprimer</button></a> </td>
+    <tr>
+  <% } %>
+</tbody>
+  </table>
+  </div>
+
+<a href='/pointage'> <button type="button" class="btn btn-default green"> Retour</button></a> 
+<% include footer %>
