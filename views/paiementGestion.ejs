@@ -19,7 +19,6 @@
           <th>Date</th>
           <th>Numéro de commande</th>
           <th>Article</th>
-          <th>Quantité</th>
           <th>Prix Total</th>
           <th>Type de transaction</th>
           <th>Action</th>
@@ -31,13 +30,16 @@
         <tr>
           <td> <%= paiements[i].date %> </td>
           <td> <%= paiements[i].id_commande %> </td>
-          <td> <%= paiements[i].nom_article %> </td>
-          <td> <%= paiements[i].quantite %> </td>
+          <td> 
+            <% if(paiements[i].type_transaction == "Débit"){ %>
+            <%= paiements[i].quantite %> x 
+            <% } %> 
+              <%= paiements[i].nom_article %> </td>
           <td> <%= paiements[i].prix_total %> </td>
           <td> <%= paiements[i].type_transaction %> </td>
           <td> 
           <% if(paiements[i].type_transaction == "Débit"){ %>
-            <a href='#'> <button type="button" class="btn btn-default">Remboursement</button></a>
+            <a href='/user/<%= id_utilisateur %>/paiement/remboursement/<%= paiements[i].id_compte %>/<%= paiements[i].prix_total %>/<%= paiements[i].id_commande %>/<%= paiements[i].quantite %>/<%= paiements[i].nom_article %>'> <button type="button" class="btn btn-default">Remboursement</button></a>
           <% } %> 
            </td>
         <tr>

@@ -67,7 +67,7 @@ module.exports.routes = {
   
 
   //Paiement
-  //'/user/:id_utilisateur/paiement/remboursement/:id_ligneCommande':'GestionPaiementAdminController.createPaiementRemboursement',
+  '/user/:id_utilisateur/paiement/remboursement/:id_compte/:montant/:id_commande/:quantite/:article':'GestionPaiementAdminController.createPaiementRemboursement',
   '/user/:id_utilisateur/paiement':'GestionPaiementAdminController.get',
   '/paiementCompte':'GestionPaiementAdminController.getPaiementCompte',
   '/paiement':'GestionPaiementAdminController.getPaiementUsers',

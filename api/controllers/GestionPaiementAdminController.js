@@ -62,15 +62,16 @@ module.exports = {
 		})
 	},
 
-	// Affiche la page '/CantineFrequentationTotale' 
+		// Affiche la page '/CantineFrequentationTotale' 
 	createPaiementRemboursement:function(req,res){
-		id_transaction = req.param('id_transaction');
-		paiementController.getTransaction(id_transaction,function(obj){
-			
+		id_compte = req.param('id_compte');
+		montant = req.param('montant');
+		id_commande = req.param('id_commande');
+		article = req.param('quantite') + " x " + req.param('article');
+		paiementController.createPaiementRemboursement(id_compte,montant,id_commande,article,function(obj){
 			if(obj.status){
-				console.log(obj.paiements)
-				console.log("oooooooo")
-				paiementController.createPaiementRemboursement(obj.paiements[0].id_compte, obj.paiements[0].prix_total, obj.paiements[0].id_commande, obj.paiements[0].nom_article,function(obj){
+				id_utilisateur = req.param('id_utilisateur');
+				paiementController.getPaiementCompte(id_utilisateur,function(obj){
 					if(obj.status){
 						var messageSuccess = req.session.success;
 						var messageError = req.session.error;
@@ -80,9 +81,27 @@ module.exports = {
 						res.view('paiementGestion',{paiements: obj.paiements, messageError: messageError, messageSuccess : messageSuccess, title: 'Données Paiement Entreprise' });
 						return;
 					}
-					return res.view('/user/'+id_utilisateur+'/paiement/',{paiements: [], err: obj.err});
 				})
 			}
 		})
 	},
+
+	// Affiche la page '/CantineFrequentationTotale' 
+	// createPaiementRemboursement:function(req,res){
+	// 	id_compte = req.param('id_compte');
+	// 	montant = req.param('montant');
+	// 	id_commande = req.param('id_commande');
+	// 	article = req.param('article');
+	// 	paiementController.createPaiementRemboursement(id_compte,montant,id_commande,article,function(obj){
+	// 		if(obj.status){
+	// 			var messageSuccess = req.session.success;
+	// 			var messageError = req.session.error;
+	// 			delete req.session.error;
+	// 			delete req.session.success;
+	// 			console.log(obj.paiements)
+	// 			res.view('paiementGestion',{paiements: obj.paiements, messageError: messageError, messageSuccess : messageSuccess, title: 'Données Paiement Entreprise' });
+	// 			return;
+	// 		}
+	// 	})
+	// },
 };
