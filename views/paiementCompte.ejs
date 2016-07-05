@@ -10,7 +10,26 @@
         </div>
 <% } %>
 <br/>
-    <h2>Mes paiements</h2>
+    <% 
+      var budget = 0; 
+      var date = new Date();
+      for( var i=paiements.length - 1; i >= 0; i--){
+        var dateS = paiements[i].date;
+        var paiementMonth = dateS.split("/");
+        if(date.getMonth() < 10){
+          var dateMonth = "0" + (date.getMonth()+1);
+        }else{
+          dateMonth = (date.getMonth()+1);
+        }
+        if(dateMonth == paiementMonth[1]){
+          if(paiements[i].type_transaction == "Débit"){
+            budget = budget - paiements[i].prix_total;
+          }else{
+            budget = budget + paiements[i].prix_total;
+          }
+        }
+      } %>
+    <h2>Budget du mois : <%= budget %>€</h2>
 
     <div class='table-responsive'>
       <table class="table table table-striped">
