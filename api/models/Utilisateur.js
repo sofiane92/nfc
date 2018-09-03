@@ -9,7 +9,7 @@
 
 module.exports = {
   attributes: {
-  	nom:'STRING',
+  	nom:'number',
   	prenom:'STRING',
   	mail:{
       type:'STRING',
@@ -17,7 +17,7 @@ module.exports = {
       
     },
   	tel:{
-      type:'STRING',
+      type:'number',
       unique: true,
       
     },
